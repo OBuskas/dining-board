@@ -211,6 +211,15 @@ REACT ICONS (Ícones)
     permanece como dependência indireta do shadcn/ui e não deve ser removido,
     mas o código do projeto deve usar apenas react-icons para novos ícones.
 
+NEXT-THEMES (Dark Mode / Temas)
+    Gerenciamento de tema (claro/escuro) via next-themes, pacote mínimo (~1KB)
+    que aplica a troca de tema via classe no elemento HTML, integra nativamente
+    com as CSS variables do shadcn/ui e persiste a preferência do usuário no
+    localStorage. Setup de ~15 minutos: ThemeProvider no layout raiz e um
+    botão de toggle no header. Escolhido por ser a solução mais simples e
+    compatível com a stack — sem necessidade de gerenciar estado manualmente
+    via Zustand ou depender apenas da media query do sistema.
+
 
 ================================================================================
 5. DECISÕES TÉCNICAS — ANÁLISE DE SUGESTÕES
@@ -253,28 +262,6 @@ pricing) e não contribui para demonstrar competência em dashboards.
 Decisão: PENDENTE
   Ainda não definido se pagamentos farão parte desta versão. Decidir
   antes do Dia 3 para não impactar o cronograma caso seja incluído.
-
-────────────────────────────────────────────────────────────────────────────────
-5.3 DARK MODE / TEMAS
-────────────────────────────────────────────────────────────────────────────────
-
-Por quê: dashboards são frequentemente usados em ambientes variados e
-dark mode é expectativa de mercado. shadcn/ui já suporta temas via CSS
-variables.
-
-Opções:
-  A) next-themes — pacote mínimo (~1KB) que gerencia tema via classe no
-     HTML, integra com shadcn/ui nativamente, persiste preferência
-  B) Manual com Zustand — controlar tema via store, mais código mas
-     sem dependência extra
-  C) Apenas CSS media query — respeita preferência do sistema, zero JS
-     mas sem toggle manual
-
-Recomendação: next-themes (se sobrar tempo)
-  Setup de 15 minutos com shadcn/ui. Se o Dia 7 tiver folga, vale
-  implementar. Mas é estritamente polimento — nunca priorizar sobre
-  funcionalidades core do dashboard.
-
 
 ================================================================================
 6. MODELAGEM DOS DADOS MOCKADOS
