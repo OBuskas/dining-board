@@ -6,6 +6,7 @@
 
 Prazo de Entrega: 7 dias
 Stack: Next.js · TypeScript · React · Tailwind CSS · shadcn/ui
+Gerenciador de Pacotes: pnpm (oficial do projeto)
 Dados 100% Mockados — Projeto de Estudo
 
 
@@ -160,6 +161,56 @@ REACT HOOK FORM (Formulários)
     Integração nativa com Zod via @hookform/resolvers para validação.
     Leve, performante e evita re-renders desnecessários.
 
+PNPM (Gerenciador de Pacotes)
+    Gerenciador oficial do projeto. Mais rápido que npm e yarn graças ao
+    armazenamento baseado em hard links e store global compartilhada.
+    Resolve dependências de forma estrita (não eleva pacotes ao root por
+    padrão), evitando acesso acidental a pacotes não declarados. Gera
+    pnpm-lock.yaml como lockfile. Todo o time deve usar pnpm — não commitar
+    package-lock.json ou yarn.lock. Versão mínima requerida: 9+.
+
+@BASE-UI/REACT (Primitivos de UI)
+    Biblioteca de componentes headless sem estilo, mantida pela equipe do
+    Material UI. Instalada automaticamente como dependência do shadcn/ui —
+    não é uma escolha explícita do projeto, mas sim uma dependência indireta
+    gerada pelo shadcn init. Fornece primitivos acessíveis (dialog, select,
+    tooltip, etc.) que o shadcn/ui usa internamente como base de alguns
+    componentes. Não deve ser importada diretamente no código do projeto;
+    toda interação ocorre pelos componentes shadcn/ui em src/components/ui/.
+
+PRETTIER (Formatação de Código)
+    Formatador automático de código, padrão da indústria no ecossistema
+    JavaScript. Garante consistência de estilo (aspas, indentação, ponto e
+    vírgula) em todo o projeto, independente do editor ou desenvolvedor.
+    Integrado ao ESLint via eslint-config-prettier para evitar conflitos de
+    regras. Configurado em .prettierrc com singleQuote, sem semi e com
+    prettier-plugin-tailwindcss para ordenar classes Tailwind automaticamente.
+
+HUSKY + LINT-STAGED (Automação de Pre-commit)
+    Husky gerencia git hooks e lint-staged executa linters apenas nos arquivos
+    staged em cada commit — sem rodar lint no projeto inteiro. Garante que
+    nenhum código mal formatado ou com erros de lint seja commitado por
+    esquecimento. Hook pre-commit configurado em .husky/pre-commit rodando
+    eslint --fix + prettier --write nos arquivos .ts/.tsx e prettier --write
+    nos arquivos .json/.css/.md.
+
+DATE-FNS (Manipulação de Datas)
+    Biblioteca de utilitários de data com funções puras e tree-shakeable.
+    Essencial para o dashboard, que trabalha intensamente com filtros de
+    período, séries temporais, formatação para gráficos e comparação entre
+    períodos. Imutável por design — não modifica objetos Date existentes.
+    Usar sempre importações individuais (ex: import { format } from 'date-fns')
+    para aproveitar o tree-shaking do Next.js.
+
+REACT ICONS (Ícones)
+    Biblioteca que agrupa múltiplos conjuntos de ícones (Font Awesome,
+    Material Design, Heroicons, Feather, etc.) em um único pacote com API
+    unificada. Escolhida pela variedade de estilos disponíveis. Usar
+    preferencialmente os conjuntos Fa (Font Awesome), Md (Material) ou
+    Hi (Heroicons) para manter consistência visual. Atenção: lucide-react
+    permanece como dependência indireta do shadcn/ui e não deve ser removido,
+    mas o código do projeto deve usar apenas react-icons para novos ícones.
+
 
 ================================================================================
 5. DECISÕES TÉCNICAS — ANÁLISE DE SUGESTÕES
@@ -168,91 +219,7 @@ REACT HOOK FORM (Formulários)
 Para cada sugestão, segue a análise com opções e recomendação:
 
 ────────────────────────────────────────────────────────────────────────────────
-5.1 FORMATAÇÃO E PADRONIZAÇÃO DE CÓDIGO
-────────────────────────────────────────────────────────────────────────────────
-
-Por quê: ESLint cuida de regras de qualidade, mas não garante formatação
-consistente (indentação, aspas, ponto e vírgula). Sem padronização automática,
-cada desenvolvedor formata de um jeito e diffs ficam poluídos.
-
-Opções:
-  A) Prettier — formatador padrão da indústria, integra com ESLint, suporte
-     universal em editores, zero configuração para começar
-  B) dprint — mais rápido que Prettier, escrito em Rust, mas ecossistema menor
-     e menos plugins disponíveis
-  C) Biome — substitui ESLint + Prettier, extremamente rápido, mas ainda em
-     maturação e com menor adoção na comunidade
-
-Recomendação: Prettier
-  Padrão da indústria, setup em minutos, integração perfeita com ESLint via
-  eslint-config-prettier. Não há razão para arriscar alternativas menos
-  maduras em um projeto de 7 dias.
-
-────────────────────────────────────────────────────────────────────────────────
-5.2 AUTOMAÇÃO DE LINT NO PRE-COMMIT
-────────────────────────────────────────────────────────────────────────────────
-
-Por quê: rodar lint e formatação manualmente é frágil. Código mal formatado
-pode ser commitado por esquecimento. Automação garante que todo commit
-respeite as regras sem esforço.
-
-Opções:
-  A) Husky + lint-staged — solução consolidada, Husky gerencia git hooks e
-     lint-staged roda linters apenas nos arquivos staged (rápido)
-  B) lefthook — alternativa mais leve, escrita em Go, sem dependência de
-     Node para os hooks, configuração em YAML
-  C) simple-git-hooks — pacote mínimo para hooks simples, sem features extras
-
-Recomendação: Husky + lint-staged
-  Combinação mais usada no ecossistema Node/React. lint-staged é essencial
-  porque roda apenas nos arquivos alterados — sem isso, cada commit rodaria
-  lint no projeto inteiro. Setup em 15 minutos.
-
-────────────────────────────────────────────────────────────────────────────────
-5.3 MANIPULAÇÃO DE DATAS
-────────────────────────────────────────────────────────────────────────────────
-
-Por quê: o dashboard trabalha intensamente com datas — filtros de período,
-séries temporais, formatação para gráficos, comparação entre períodos. A
-Date API nativa do JS é limitada e verbosa para essas operações.
-
-Opções:
-  A) date-fns — funções puras, tree-shakeable, sem mutação de objetos,
-     imutável por design, ampla cobertura de formatação e manipulação
-  B) dayjs — API similar ao Moment.js mas com apenas 2KB, extensível
-     via plugins, encadeia operações naturalmente
-  C) Temporal API (nativa) — futura solução nativa do JS, mas ainda em
-     Stage 3 e sem suporte amplo em browsers/Node
-
-Recomendação: date-fns
-  Tree-shaking é ideal para um projeto Next.js — importa apenas as funções
-  usadas. Funções puras combinam bem com Zod e dados imutáveis. Boa
-  integração com React (sem efeitos colaterais). dayjs seria aceitável,
-  mas date-fns é mais idiomática no ecossistema TypeScript moderno.
-
-────────────────────────────────────────────────────────────────────────────────
-5.4 ÍCONES
-────────────────────────────────────────────────────────────────────────────────
-
-Por quê: KPIs, sidebar, botões e indicadores precisam de ícones. shadcn/ui
-já usa Lucide internamente, então é preciso definir se adota o mesmo ou
-outra biblioteca.
-
-Opções:
-  A) Lucide React — padrão do shadcn/ui, 1500+ ícones, consistentes, SVG
-     otimizado, tree-shakeable
-  B) React Icons — wrapper de múltiplas bibliotecas (Font Awesome, Material,
-     etc), mais variedade mas bundles maiores e estilos inconsistentes
-  C) Phosphor Icons — design elegante, 6 variações de peso por ícone, mas
-     não é padrão do shadcn/ui
-
-Recomendação: Lucide React
-  Já é dependência indireta via shadcn/ui. Usar outra biblioteca criaria
-  inconsistência visual e aumentaria o bundle desnecessariamente. Escolha
-  óbvia por coerência de stack.
-
-────────────────────────────────────────────────────────────────────────────────
-5.5 DATA FETCHING (PREPARAÇÃO FUTURA)
+5.1 DATA FETCHING (PREPARAÇÃO FUTURA)
 ────────────────────────────────────────────────────────────────────────────────
 
 Por quê: atualmente os dados são mockados, mas a arquitetura deve facilitar
@@ -266,14 +233,13 @@ Opções:
   C) Sem biblioteca — usar fetch direto + useState, funciona para mocks
      mas cria débito técnico para migração futura
 
-Recomendação: NÃO incluir agora
-  Com dados mockados, TanStack Query ou SWR adicionam complexidade sem
-  benefício real. A recomendação é estruturar os mocks como funções
-  assíncronas (simulando fetch) para que a migração futura para TanStack
-  Query seja natural. Incluir na V2 quando houver API real.
+Decisão: PENDENTE
+  Ainda não definido se e qual biblioteca será adotada. Decidir antes
+  de iniciar o Dia 2 (modelagem dos dados mockados), pois impacta como
+  as funções geradoras de mock serão estruturadas.
 
 ────────────────────────────────────────────────────────────────────────────────
-5.6 STRIPE (PAGAMENTOS)
+5.2 STRIPE (PAGAMENTOS)
 ────────────────────────────────────────────────────────────────────────────────
 
 Por quê: Stripe poderia adicionar uma camada de monetização ao dashboard,
@@ -284,14 +250,12 @@ completamente tangenciais ao valor principal do produto. Implementar
 Stripe consome ao menos 1 dia completo (integração, webhooks, UI de
 pricing) e não contribui para demonstrar competência em dashboards.
 
-Recomendação: NÃO incluir nesta versão
-  O tempo é melhor investido em mais visualizações e melhor qualidade
-  dos dashboards existentes. Se o objetivo fosse demonstrar integração
-  com Stripe, seria outro projeto. Avaliar apenas em uma V2 caso o
-  projeto evolua para SaaS real.
+Decisão: PENDENTE
+  Ainda não definido se pagamentos farão parte desta versão. Decidir
+  antes do Dia 3 para não impactar o cronograma caso seja incluído.
 
 ────────────────────────────────────────────────────────────────────────────────
-5.7 DARK MODE / TEMAS
+5.3 DARK MODE / TEMAS
 ────────────────────────────────────────────────────────────────────────────────
 
 Por quê: dashboards são frequentemente usados em ambientes variados e
