@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"/c/Users/lucas/Documentos/programas/dining-board/src/app/\\(auth\\)/sign-in/\")",
+      "Bash(ls -la \"/c/Users/lucas/Documentos/programas/dining-board/src/app/\\(dashboard\\)/\")",
+      "Bash(ls -la \"/c/Users/lucas/Documentos/programas/dining-board/src/app/\\(dashboard\\)/dashboard/\")",
+      "Bash(find /c/Users/lucas/Documentos/programas/dining-board -maxdepth 1 -type f \\\\\\(-name tailwind.config.* -o -name next.config.* -o -name tsconfig.json -o -name .eslintrc* \\\\\\))",
+      "Bash(pnpm ls:*)",
+      "Bash(pnpm list:*)",
+      "Bash(find c:/Users/lucas/Documentos/programas/dining-board/node_modules/.pnpm -path */lucide-react/package.json)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)",
+      "Bash(ls c:/Users/lucas/Documentos/programas/dining-board/src/components/ui/switch*)",
+      "Bash(pnpm dlx:*)"
+    ]
+  }
+}

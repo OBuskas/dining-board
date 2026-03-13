@@ -1,178 +1,181 @@
 ﻿# Dining Board
 
-Dashboard analítico de Business Intelligence para restaurantes e franquias. Centraliza métricas operacionais e financeiras em uma interface profissional com KPIs, gráficos comparativos, tabelas analíticas e filtros contextuais.
+Analytical Business Intelligence dashboard for restaurants and franchises. Centralizes operational and financial metrics in a professional interface with KPIs, comparative charts, analytical tables, and contextual filters.
 
-> Projeto de estudo com dados 100% mockados. Sem backend real nesta versão.
-
----
-
-## Visão Geral
-
-Na maioria dos restaurantes, dados de vendas, pedidos, produtos e performance de unidades estão espalhados em diferentes sistemas ou planilhas. O Dining Board consolida tudo em um único lugar, permitindo que gestores tomem decisões baseadas em dados.
-
-**Problema que resolve:** fragmentação de informações operacionais e financeiras em redes de restaurantes e franquias.
-
-**Foco técnico:** demonstrar domínio na construção de dashboards analíticos com tecnologias modernas do ecossistema React.
+> Study project with 100% mocked data. No real backend in this version.
 
 ---
 
-## Funcionalidades
+## Overview
 
-| Página                    | Descrição                                                                                          | Status    |
-| ------------------------- | -------------------------------------------------------------------------------------------------- | --------- |
-| **Dashboard Overview**    | KPIs principais, faturamento, pedidos, ticket médio e crescimento vs período anterior              | Essencial |
-| **Sales Analytics**       | Receita por período, comparações entre unidades, ranking de franquias e gráficos de evolução       | Essencial |
-| **Product Mix**           | Participação de produtos no faturamento, top itens, receita por categoria e gráficos de composição | Essencial |
-| **Operação e Pedidos**    | Horários de pico, distribuição por canal, taxa de cancelamento e pedidos recentes                  | Opcional  |
-| **Unidades / Franquias**  | Comparativo de performance entre unidades, ranking e identificação de destaques                    | Opcional  |
-| **Insights e Tendências** | Tendências de crescimento, alertas de métricas e destaques automáticos                             | Opcional  |
+In most restaurants, sales, orders, products, and unit performance data are scattered across different systems or spreadsheets. Dining Board consolidates everything in one place, enabling managers to make data-driven decisions.
 
-### KPIs e Métricas
+**Problem it solves:** fragmentation of operational and financial information in restaurant chains and franchises.
 
-**Financeiras:** Faturamento total · Ticket médio · Receita por categoria · Crescimento vs período anterior · Receita por unidade · Receita por produto
-
-**Vendas e Produtos:** Pedidos totais · Vendas por dia · Product Mix (%) · Top 10 itens · Itens por pedido (média)
-
-**Operacionais:** Horários de pico · Distribuição por canal (salão / delivery / takeout) · Taxa de cancelamento · Performance por unidade
+**Technical focus:** demonstrate proficiency in building analytical dashboards with modern technologies from the React ecosystem.
 
 ---
 
-## Stack Técnica
+## Features
+
+| Page                    | Description                                                                       | Status    |
+| ----------------------- | --------------------------------------------------------------------------------- | --------- |
+| **Dashboard Overview**  | Main KPIs, revenue, orders, average ticket, and growth vs previous period         | Essential |
+| **Sales Analytics**     | Revenue by period, comparisons between units, franchise ranking, and trend charts | Essential |
+| **Product Mix**         | Product share in revenue, top items, revenue by category, and composition charts  | Essential |
+| **Operations & Orders** | Peak hours, distribution by channel, cancellation rate, and recent orders         | Optional  |
+| **Units / Franchises**  | Performance comparison between units, ranking, and highlight identification       | Optional  |
+| **Insights & Trends**   | Growth trends, metric alerts, and automatic highlights                            | Optional  |
+| **Profile**             | Profile settings: personal data, security (password/email), email notifications   | Essential |
+
+### KPIs and Metrics
+
+**Financial:** Total revenue · Average ticket · Revenue by category · Growth vs previous period · Revenue by unit · Revenue by product
+
+**Sales & Products:** Total orders · Daily sales · Product Mix (%) · Top 10 items · Items per order (average)
+
+**Operational:** Peak hours · Distribution by channel (dine-in / delivery / takeout) · Cancellation rate · Performance by unit
+
+---
+
+## Tech Stack
 
 ### Core
 
-| Tecnologia                               | Versão | Função                         |
-| ---------------------------------------- | ------ | ------------------------------ |
-| [Next.js](https://nextjs.org)            | 16     | Framework React com App Router |
-| [TypeScript](https://typescriptlang.org) | 5      | Tipagem estática               |
-| [Tailwind CSS](https://tailwindcss.com)  | 4      | Estilização utility-first      |
-| [React](https://react.dev)               | 19     | Biblioteca de UI               |
+| Technology                               | Version | Purpose                         |
+| ---------------------------------------- | ------- | ------------------------------- |
+| [Next.js](https://nextjs.org)            | 16      | React framework with App Router |
+| [TypeScript](https://typescriptlang.org) | 5       | Static typing                   |
+| [Tailwind CSS](https://tailwindcss.com)  | 4       | Utility-first styling           |
+| [React](https://react.dev)               | 19      | UI library                      |
 
-### Autenticação
+### Authentication
 
-| Tecnologia                 | Função                                                                                                                                            |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Clerk](https://clerk.com) | Login, registro, proteção de rotas e sessões. Middleware protege todas as rotas `/dashboard/*`. Componentes prontos de UI para sign-in e sign-up. |
+| Technology                 | Purpose                                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Clerk](https://clerk.com) | Login, registration, route protection, and sessions. Middleware protects all `/dashboard/*` routes. Ready-made UI components for sign-in and sign-up. |
 
 ### Interface
 
-| Tecnologia                                                | Função                                                                                                                                         |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [shadcn/ui](https://ui.shadcn.com)                        | Componentes acessíveis baseados em Radix UI, copiados para o projeto — sem dependência de versão externa                                       |
-| [React Icons](https://react-icons.github.io/react-icons)  | Ícones unificados de múltiplas bibliotecas (Font Awesome, Material, Heroicons). Usar preferencialmente `Fa`, `Md` ou `Hi`                      |
-| [next-themes](https://github.com/pacocoursey/next-themes) | Gerenciamento de tema claro/escuro via classe no HTML. Integra nativamente com as CSS variables do shadcn/ui e persiste preferência do usuário |
+| Technology                                                | Purpose                                                                                                                   |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| [shadcn/ui](https://ui.shadcn.com) (base-nova)            | Accessible components based on `@base-ui/react` (not Radix UI), copied into the project — no external version dependency  |
+| [React Icons](https://react-icons.github.io/react-icons)  | Unified icons from multiple libraries (Font Awesome, Material, Heroicons). Preferably use `Fa`, `Md`, or `Hi`             |
+| [Inter](https://rsms.me/inter)                            | Professional sans-serif font, loaded via `next/font/google`. Standard in SaaS dashboards                                  |
+| [next-themes](https://github.com/pacocoursey/next-themes) | Light/dark theme management via HTML class. Natively integrates with shadcn/ui CSS variables and persists user preference |
 
-### Dados e Estado
+### Data & State
 
-| Tecnologia                              | Função                                                                                       |
-| --------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [Zustand](https://zustand-demo.pmnd.rs) | Estado global leve: filtros de período, unidade selecionada, sidebar. Zero boilerplate       |
-| [Zod](https://zod.dev)                  | Schemas de validação para todas as entidades mockadas. Gera tipos TypeScript via `z.infer`   |
-| [date-fns](https://date-fns.org)        | Manipulação e formatação de datas. Funções puras e tree-shakeable — importar individualmente |
+| Technology                              | Purpose                                                                                   |
+| --------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Zustand](https://zustand-demo.pmnd.rs) | Lightweight global state: period filters, selected unit, sidebar. Zero boilerplate        |
+| [Zod](https://zod.dev)                  | Validation schemas for all mocked entities. Generates TypeScript types via `z.infer`      |
+| [date-fns](https://date-fns.org)        | Date manipulation and formatting. Pure and tree-shakeable functions — import individually |
 
-### Visualização
+### Visualization
 
-| Tecnologia                                   | Função                                                                       |
-| -------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Recharts](https://recharts.org)             | Gráficos de linha, barras, pizza, área e compostos. Declarativo e responsivo |
-| [TanStack Table](https://tanstack.com/table) | Tabelas headless com ordenação, filtragem e paginação. Core do BI            |
+| Technology                                   | Purpose                                                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------- |
+| [Recharts](https://recharts.org)             | Line, bar, pie, area, and composite charts. Declarative and responsive  |
+| [TanStack Table](https://tanstack.com/table) | Headless tables with sorting, filtering, and pagination. Core of the BI |
 
-### Formulários
+### Forms
 
-| Tecnologia                                     | Função                                                                              |
+| Technology                                     | Purpose                                                                             |
 | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [React Hook Form](https://react-hook-form.com) | Gerencia filtros e seletores de período. Integrado ao Zod via `@hookform/resolvers` |
+| [React Hook Form](https://react-hook-form.com) | Manages filters and period selectors. Integrated with Zod via `@hookform/resolvers` |
 
-### Qualidade de Código
+### Code Quality
 
-| Tecnologia                                                                                            | Função                                                                       |
-| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [ESLint](https://eslint.org)                                                                          | Lint com `eslint-config-next` e `eslint-config-prettier`                     |
-| [Prettier](https://prettier.io)                                                                       | Formatação automática com `prettier-plugin-tailwindcss` para ordenar classes |
-| [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) | Hook pre-commit: roda ESLint + Prettier apenas nos arquivos staged           |
+| Technology                                                                                            | Purpose                                                              |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [ESLint](https://eslint.org)                                                                          | Linting with `eslint-config-next` and `eslint-config-prettier`       |
+| [Prettier](https://prettier.io)                                                                       | Auto-formatting with `prettier-plugin-tailwindcss` for class sorting |
+| [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged) | Pre-commit hook: runs ESLint + Prettier only on staged files         |
 
-### Gerenciador de Pacotes
+### Package Manager
 
-Este projeto usa **pnpm** como gerenciador oficial. Não commitar `package-lock.json` ou `yarn.lock`.
+This project uses **pnpm** as the official package manager. Do not commit `package-lock.json` or `yarn.lock`.
 
 ---
 
-## Estrutura de Pastas
+## Folder Structure
 
 ```
 src/
 ├── app/
-│   ├── (auth)/              # Rotas públicas: /sign-in, /sign-up
-│   ├── (dashboard)/         # Rotas protegidas com layout compartilhado
+│   ├── (auth)/              # Public routes: /sign-in, /sign-up
+│   ├── (dashboard)/         # Protected routes with shared layout
 │   │   ├── layout.tsx        # Sidebar + Header
-│   │   ├── dashboard/        # Overview (KPIs e gráficos)
+│   │   ├── dashboard/        # Overview (KPIs and charts)
 │   │   ├── dashboard/sales/  # Sales Analytics
 │   │   ├── dashboard/products/ # Product Mix
-│   │   ├── dashboard/operations/ # Operação e Pedidos
-│   │   ├── dashboard/units/  # Unidades / Franquias
-│   │   └── dashboard/insights/ # Insights e Tendências
+│   │   ├── dashboard/operations/ # Operations & Orders
+│   │   ├── dashboard/units/  # Units / Franchises
+│   │   ├── dashboard/insights/ # Insights & Trends
+│   │   └── dashboard/profile/ # User Profile
 │   ├── layout.tsx            # Root layout (ClerkProvider)
-│   └── page.tsx              # Redireciona para /dashboard
+│   └── page.tsx              # Redirects to /dashboard
 ├── components/
-│   ├── ui/                  # Componentes shadcn/ui (gerados via CLI)
+│   ├── ui/                  # shadcn/ui components (generated via CLI)
 │   ├── layout/              # AppSidebar, DashboardHeader, Shell, PageContainer
 │   ├── cards/               # KPICard, KPIGrid, TrendIndicator
-│   ├── charts/              # Wrappers Recharts (Line, Bar, Pie, etc.)
-│   ├── tables/              # Wrappers TanStack Table
+│   ├── charts/              # Recharts wrappers (Line, Bar, Pie, etc.)
+│   ├── tables/              # TanStack Table wrappers
 │   └── filters/             # DateRangePicker, UnitSelector, CategoryFilter
 ├── lib/
-│   ├── mock/                # Dados mockados e funções geradoras (seed fixo)
-│   ├── schemas/             # Schemas Zod para todas as entidades
-│   └── utils.ts             # cn(), formatação, helpers
-├── stores/                  # Stores Zustand (sidebar, filtros globais)
-├── hooks/                   # Custom hooks reutilizáveis
-├── types/                   # Interfaces e tipos TypeScript globais
-└── constants/               # Cores, labels, configurações
+│   ├── mock/                # Mocked data and generator functions (fixed seed)
+│   ├── schemas/             # Zod schemas for all entities
+│   └── utils.ts             # cn(), formatting, helpers
+├── stores/                  # Zustand stores (sidebar, global filters)
+├── hooks/                   # Reusable custom hooks
+├── types/                   # Global TypeScript interfaces and types
+└── constants/               # Colors, labels, configurations
 ```
 
 ---
 
-## Modelagem dos Dados
+## Data Modeling
 
-Todos os dados são mockados e gerados por funções com seeds fixos (resultados reproduzíveis). Cada entidade é validada por um schema Zod antes de ser usada.
+All data is mocked and generated by functions with fixed seeds (reproducible results). Each entity is validated by a Zod schema before use.
 
-| Entidade       | Descrição                      | Campos principais                          |
-| -------------- | ------------------------------ | ------------------------------------------ |
-| `Restaurant`   | Dados da rede/marca            | id, nome, logo                             |
-| `Unit`         | Unidades individuais           | id, nome, cidade, estado, status           |
-| `Category`     | Categorias do cardápio         | id, nome, ordem                            |
-| `Product`      | Itens do cardápio              | id, nome, preço, categoriaId               |
-| `Order`        | Pedidos realizados             | id, data, unitId, canal, status, total     |
-| `OrderItem`    | Itens de um pedido             | id, orderId, productId, qtd, preço         |
-| `DailySales`   | Vendas agregadas por dia       | data, unitId, receita, pedidos, ticket     |
-| `ProductSales` | Vendas agregadas por produto   | productId, período, qtd, receita, %mix     |
-| `UnitMetrics`  | KPIs por unidade               | unitId, período, receita, pedidos, ranking |
-| `TimeSeries`   | Séries temporais para gráficos | data, métrica, valor                       |
+| Entity         | Description              | Main Fields                              |
+| -------------- | ------------------------ | ---------------------------------------- |
+| `Restaurant`   | Chain/brand data         | id, name, logo                           |
+| `Unit`         | Individual units         | id, name, city, state, status            |
+| `Category`     | Menu categories          | id, name, order                          |
+| `Product`      | Menu items               | id, name, price, categoryId              |
+| `Order`        | Placed orders            | id, date, unitId, channel, status, total |
+| `OrderItem`    | Items within an order    | id, orderId, productId, qty, price       |
+| `DailySales`   | Daily aggregated sales   | date, unitId, revenue, orders, ticket    |
+| `ProductSales` | Product aggregated sales | productId, period, qty, revenue, %mix    |
+| `UnitMetrics`  | KPIs per unit            | unitId, period, revenue, orders, ranking |
+| `TimeSeries`   | Time series for charts   | date, metric, value                      |
 
-**Volume simulado:** 5 unidades · 30+ produtos em 5–8 categorias · 90 dias de vendas · variações realistas com picos de fim de semana.
-
----
-
-## Fluxo de Autenticação
-
-```
-Usuário acessa /
-       ↓
-Não autenticado → /sign-in (Clerk)
-Autenticado     → /dashboard
-       ↓
-Middleware protege todas as rotas /dashboard/* e /settings
-       ↓
-UserButton no header: avatar + nome + logout
-```
+**Simulated volume:** 5 units · 30+ products across 5–8 categories · 90 days of sales · realistic variations with weekend peaks.
 
 ---
 
-## Setup Local
+## Authentication Flow
 
-**Pré-requisitos:** Node.js 20+, pnpm 9+
+```
+User accesses /
+       ↓
+Not authenticated → /sign-in (Clerk)
+Authenticated     → /dashboard
+       ↓
+Middleware protects all /dashboard/* and /settings routes
+       ↓
+UserButton in header: avatar + name + logout
+```
 
-### 1. Clonar e instalar
+---
+
+## Local Setup
+
+**Prerequisites:** Node.js 20+, pnpm 9+
+
+### 1. Clone and install
 
 ```bash
 git clone git@github.com:OBuskas/dining-board.git
@@ -180,9 +183,9 @@ cd dining-board
 pnpm install
 ```
 
-### 2. Configurar variáveis de ambiente
+### 2. Configure environment variables
 
-Crie um app em [dashboard.clerk.com](https://dashboard.clerk.com) e copie as chaves:
+Create an app at [dashboard.clerk.com](https://dashboard.clerk.com) and copy the keys:
 
 ```bash
 cp .env.local.example .env.local
@@ -198,48 +201,49 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 ```
 
-### 3. Rodar
+### 3. Run
 
 ```bash
 pnpm dev
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000).
+Go to [http://localhost:3000](http://localhost:3000).
 
 ---
 
 ## Scripts
 
 ```bash
-pnpm dev      # Servidor de desenvolvimento
-pnpm build    # Build de produção
-pnpm start    # Servidor de produção
-pnpm lint     # Rodar ESLint
+pnpm dev      # Development server
+pnpm build    # Production build
+pnpm start    # Production server
+pnpm lint     # Run ESLint
 ```
 
 ---
 
-## Rotas
+## Routes
 
-| Rota                    | Descrição             | Acesso      |
-| ----------------------- | --------------------- | ----------- |
-| `/sign-in`              | Login                 | Pública     |
-| `/sign-up`              | Registro              | Pública     |
-| `/dashboard`            | Overview geral        | Autenticada |
-| `/dashboard/sales`      | Sales Analytics       | Autenticada |
-| `/dashboard/products`   | Product Mix           | Autenticada |
-| `/dashboard/operations` | Operação e Pedidos    | Autenticada |
-| `/dashboard/units`      | Unidades / Franquias  | Autenticada |
-| `/dashboard/insights`   | Insights e Tendências | Autenticada |
+| Route                   | Description         | Access        |
+| ----------------------- | ------------------- | ------------- |
+| `/sign-in`              | Login               | Public        |
+| `/sign-up`              | Registration        | Public        |
+| `/dashboard`            | General overview    | Authenticated |
+| `/dashboard/sales`      | Sales Analytics     | Authenticated |
+| `/dashboard/products`   | Product Mix         | Authenticated |
+| `/dashboard/operations` | Operations & Orders | Authenticated |
+| `/dashboard/units`      | Units / Franchises  | Authenticated |
+| `/dashboard/insights`   | Insights & Trends   | Authenticated |
+| `/dashboard/profile`    | User Profile        | Authenticated |
 
 ---
 
-## Evoluções Futuras (V2)
+## Future Improvements (V2)
 
-- **Backend real** — Node.js, Prisma, PostgreSQL
-- **TanStack Query** — cache e fetching quando houver API
-- **Exportação** — relatórios em PDF e CSV
-- **Multitenancy** — perfis de admin, gerente e visualizador com Clerk Organizations
-- **Integrações** — iFood, Rappi, sistemas de PDV
-- **Insights com IA** — análise de padrões e recomendações automáticas
-- **Testes** — Vitest + Playwright
+- **Real backend** — Node.js, Prisma, PostgreSQL
+- **TanStack Query** — caching and fetching when an API is available
+- **Export** — reports in PDF and CSV
+- **Multitenancy** — admin, manager, and viewer profiles with Clerk Organizations
+- **Integrations** — iFood, Rappi, POS systems
+- **AI-powered insights** — pattern analysis and automatic recommendations
+- **Testing** — Vitest + Playwright
