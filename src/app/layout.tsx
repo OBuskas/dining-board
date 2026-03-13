@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ClerkProvider } from '@clerk/nextjs'
 import { Inter } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
@@ -21,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
-        {children}
-        <Toaster position="bottom-right" richColors />
+        <ClerkProvider>
+          {children}
+          <Toaster position="bottom-right" richColors />
+        </ClerkProvider>
       </body>
     </html>
   )
