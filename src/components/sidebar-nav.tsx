@@ -3,34 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  HiOutlineSquares2X2,
-  HiOutlineBanknotes,
-  HiOutlineShoppingBag,
-  HiOutlineCog6Tooth,
-  HiOutlineBuildingStorefront,
-  HiOutlineLightBulb,
-  HiOutlineChevronLeft,
-  HiOutlineChevronRight,
-} from 'react-icons/hi2'
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi2'
 import { cn } from '@/lib/utils'
+import { NAV_ITEMS } from '@/constants/nav-items'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-
-const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: HiOutlineSquares2X2, exact: true },
-  { label: 'Sales Analytics', href: '/dashboard/sales', icon: HiOutlineBanknotes, exact: false },
-  { label: 'Product Mix', href: '/dashboard/products', icon: HiOutlineShoppingBag, exact: false },
-  { label: 'Operations', href: '/dashboard/operations', icon: HiOutlineCog6Tooth, exact: false },
-  {
-    label: 'Units',
-    href: '/dashboard/units',
-    icon: HiOutlineBuildingStorefront,
-    exact: false,
-  },
-  { label: 'Insights', href: '/dashboard/insights', icon: HiOutlineLightBulb, exact: false },
-]
 
 export function SidebarNav() {
   const [collapsed, setCollapsed] = useState(false)
@@ -45,31 +23,33 @@ export function SidebarNav() {
     <TooltipProvider delay={0}>
       <aside
         className={cn(
-          'flex h-full flex-col bg-[#0f172a] transition-all duration-200',
+          'bg-sidebar flex h-full flex-col transition-all duration-200',
           collapsed ? 'w-20' : 'w-64'
         )}
       >
         {/* Logo */}
         <div className="flex h-14 items-center gap-2 px-5">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold">
             DB
           </div>
-          {!collapsed && <span className="text-base font-semibold text-white">Dining Board</span>}
+          {!collapsed && (
+            <span className="text-sidebar-foreground text-base font-semibold">Dining Board</span>
+          )}
         </div>
 
-        <Separator className="bg-white/10" />
+        <Separator className="bg-sidebar-border" />
 
         {/* Navigation */}
         <nav className="mt-4 flex flex-1 flex-col gap-1 px-3">
-          {navItems.map((item) => {
+          {NAV_ITEMS.map((item) => {
             const active = isActive(item.href, item.exact)
             const Icon = item.icon
 
             const linkClasses = cn(
               'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
               active
-                ? 'border-l-[3px] border-blue-500 bg-white/10 text-white'
-                : 'border-l-[3px] border-transparent text-slate-400 hover:bg-white/5 hover:text-slate-200'
+                ? 'border-l-[3px] border-sidebar-primary bg-sidebar-accent text-sidebar-foreground'
+                : 'border-l-[3px] border-transparent text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
             )
 
             if (collapsed) {
@@ -98,7 +78,7 @@ export function SidebarNav() {
             variant="ghost"
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
-            className="w-full text-slate-400 hover:bg-white/10 hover:text-white"
+            className="text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground w-full"
           >
             {collapsed ? (
               <HiOutlineChevronRight className="size-5" />

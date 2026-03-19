@@ -1,9 +1,15 @@
+'use client'
+
 import { PageHeader } from '@/components/page-header'
-import { Placeholder } from '@/components/placeholder'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { RevenueTrendAreaChart } from '@/components/charts/revenue-trend-area-chart'
+import { useDashboardData } from '@/hooks/use-dashboard-data'
+import { formatUSD } from '@/lib/formatters'
 
 export default function InsightsPage() {
+  const { kpis, dailyRevenue } = useDashboardData()
+
   return (
     <>
       <PageHeader title="Insights & Trends" />
@@ -58,7 +64,7 @@ export default function InsightsPage() {
         </div>
 
         {/* Chart */}
-        <Placeholder label="Area Chart: Revenue Trend + Projection" />
+        <RevenueTrendAreaChart data={dailyRevenue} />
 
         {/* Highlight Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -67,8 +73,10 @@ export default function InsightsPage() {
               <CardTitle className="text-muted-foreground text-sm font-medium">Best Day</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold">Saturday</p>
-              <p className="text-muted-foreground text-sm">R$ 42.800 average revenue</p>
+              <p className="text-2xl font-bold">{kpis.bestDayName}</p>
+              <p className="text-muted-foreground text-sm">
+                Best day of the week by average revenue
+              </p>
             </CardContent>
           </Card>
 
@@ -79,8 +87,10 @@ export default function InsightsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold">X-Burger Classic</p>
-              <p className="text-muted-foreground text-sm">4.230 units sold this month</p>
+              <p className="text-2xl font-bold">{kpis.topProductName}</p>
+              <p className="text-muted-foreground text-sm">
+                {formatUSD(kpis.topProductRevenue)} in revenue this period
+              </p>
             </CardContent>
           </Card>
 
@@ -89,8 +99,10 @@ export default function InsightsPage() {
               <CardTitle className="text-muted-foreground text-sm font-medium">Star Unit</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold">Unit Jardins</p>
-              <p className="text-muted-foreground text-sm">R$ 312.450 this month</p>
+              <p className="text-2xl font-bold">{kpis.bestUnitName}</p>
+              <p className="text-muted-foreground text-sm">
+                {formatUSD(kpis.bestUnitRevenue)} this period
+              </p>
             </CardContent>
           </Card>
         </div>

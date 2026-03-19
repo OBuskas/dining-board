@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { useUser, SignOutButton } from '@clerk/nextjs'
 import { PageHeader } from '@/components/page-header'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -45,6 +45,7 @@ const roleLabels: Record<Role, string> = {
 }
 
 export default function ProfilePage() {
+  const { user, isLoaded } = useUser()
   const [role, setRole] = useState<Role>('admin')
   const [selectedRole, setSelectedRole] = useState<Role>('admin')
 
@@ -54,7 +55,7 @@ export default function ProfilePage() {
     criticalAlerts: true,
     productAlerts: false,
   }
-  const [notifications, setNotifications] = useState(defaultNotifications)
+  const [_notifications, setNotifications] = useState(defaultNotifications)
   const [pendingNotifications, setPendingNotifications] = useState(defaultNotifications)
 
   function fakeSave(callback: () => void) {
@@ -92,6 +93,17 @@ export default function ProfilePage() {
   function toggleNotification(key: keyof typeof defaultNotifications) {
     setPendingNotifications((prev) => ({ ...prev, [key]: !prev[key] }))
   }
+  if (!isLoaded) {
+    return (
+      <>
+        <PageHeader title="Profile" />
+        <div className="flex items-center justify-center p-12">
+          <p className="text-muted-foreground">Loading profile...</p>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <PageHeader title="Profile" />
@@ -100,11 +112,16 @@ export default function ProfilePage() {
         {/* Profile Header */}
         <div className="flex items-center gap-6">
           <Avatar className="size-20">
-            <AvatarFallback className="text-2xl">JD</AvatarFallback>
+            {user?.imageUrl && <AvatarImage src={user.imageUrl} alt="Profile" />}
+            <AvatarFallback className="text-2xl">
+              {(user?.firstName?.[0] ?? '') + (user?.lastName?.[0] ?? '')}
+            </AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-xl font-semibold">John Doe</h2>
-            <p className="text-muted-foreground">john.doe@restaurant.com</p>
+            <h2 className="text-xl font-semibold">
+              {user ? `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() : 'Loading...'}
+            </h2>
+            <p className="text-muted-foreground">{user?.emailAddresses[0]?.emailAddress ?? ''}</p>
             <Badge
               variant="outline"
               className={`mt-2 inline-flex items-center gap-1.5 ${roleColors[role].badge}`}
@@ -157,20 +174,28 @@ export default function ProfilePage() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" defaultValue="John" />
+                      <Input id="firstName" defaultValue={user?.firstName ?? ''} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" defaultValue="Doe" />
+                      <Input id="lastName" defaultValue={user?.lastName ?? ''} />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" defaultValue="john.doe@restaurant.com" />
+                    <Input
+                      id="email"
+                      type="email"
+                      defaultValue={user?.emailAddresses[0]?.emailAddress ?? ''}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" type="tel" defaultValue="+55 11 99999-0000" />
+                    <Input
+                      id="phone"
+                      type="tel"
+                      defaultValue={user?.phoneNumbers?.[0]?.phoneNumber ?? ''}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label>Role</Label>
@@ -225,7 +250,14 @@ export default function ProfilePage() {
                   </div>
                   <div>
                     <p className="text-muted-foreground text-sm">Member Since</p>
-                    <p className="font-medium">January 2024</p>
+                    <p className="font-medium">
+                      {user?.createdAt
+                        ? new Intl.DateTimeFormat('en-US', {
+                            month: 'long',
+                            year: 'numeric',
+                          }).format(user.createdAt)
+                        : '—'}
+                    </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-sm">Team</p>
@@ -498,9 +530,9 @@ export default function ProfilePage() {
 
         {/* Sign Out */}
         <div className="flex justify-end">
-          <Button variant="outline" nativeButton={false} render={<Link href="/sign-in" />}>
-            Sign Out
-          </Button>
+          <SignOutButton>
+            <Button variant="outline">Sign Out</Button>
+          </SignOutButton>
         </div>
       </div>
     </>

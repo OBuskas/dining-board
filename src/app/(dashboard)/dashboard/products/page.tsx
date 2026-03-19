@@ -1,8 +1,17 @@
+'use client'
+
 import { PageHeader } from '@/components/page-header'
 import { KpiCard } from '@/components/kpi-card'
-import { Placeholder } from '@/components/placeholder'
+import { ProductMixDonutChart } from '@/components/charts/product-mix-donut-chart'
+import { TopProductsBarChart } from '@/components/charts/top-products-bar-chart'
+import { ProductRankingTable } from '@/components/tables/product-ranking-table'
+import { CategoryFilter } from '@/components/filters/category-filter'
+import { useDashboardData } from '@/hooks/use-dashboard-data'
+import { formatUSD, formatNumber } from '@/lib/formatters'
 
 export default function ProductsPage() {
+  const { kpis, categoryRevenue, productRankings } = useDashboardData()
+
   return (
     <>
       <PageHeader title="Product Mix" />
@@ -10,30 +19,37 @@ export default function ProductsPage() {
       <div className="space-y-6 p-6">
         {/* KPI Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <KpiCard title="Active Products" value="47" trend="+3" trendDirection="up" />
+          <KpiCard
+            title="Active Products"
+            value={String(kpis.activeProducts)}
+            trend="+3"
+            trendDirection="up"
+          />
           <KpiCard
             title="Top Product Revenue"
-            value="R$ 89.230"
+            value={formatUSD(kpis.topProductRevenue)}
             trend="+15.4%"
             trendDirection="up"
           />
-          <KpiCard title="Avg Items per Order" value="3.2" trend="+0.3" trendDirection="up" />
+          <KpiCard
+            title="Avg Items per Order"
+            value={formatNumber(kpis.avgItemsPerOrder)}
+            trend="+0.3"
+            trendDirection="up"
+          />
         </div>
 
         {/* Filter Bar */}
-        <Placeholder label="Category Filter" height="h-10" className="w-56" />
+        <CategoryFilter />
 
         {/* Charts */}
         <div className="grid gap-4 lg:grid-cols-2">
-          <Placeholder label="Donut Chart: Product Mix by Category" />
-          <Placeholder label="Bar Chart: Top 10 Products" />
+          <ProductMixDonutChart data={categoryRevenue} />
+          <TopProductsBarChart data={productRankings} />
         </div>
 
         {/* Table */}
-        <Placeholder
-          label="Data Table: Product Ranking — Rank · Product · Category · Units Sold · Revenue · Mix %"
-          height="h-80"
-        />
+        <ProductRankingTable data={productRankings} />
       </div>
     </>
   )

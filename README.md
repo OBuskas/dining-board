@@ -18,15 +18,15 @@ In most restaurants, sales, orders, products, and unit performance data are scat
 
 ## Features
 
-| Page                    | Description                                                                       | Status    |
-| ----------------------- | --------------------------------------------------------------------------------- | --------- |
-| **Dashboard Overview**  | Main KPIs, revenue, orders, average ticket, and growth vs previous period         | Essential |
-| **Sales Analytics**     | Revenue by period, comparisons between units, franchise ranking, and trend charts | Essential |
-| **Product Mix**         | Product share in revenue, top items, revenue by category, and composition charts  | Essential |
-| **Operations & Orders** | Peak hours, distribution by channel, cancellation rate, and recent orders         | Optional  |
-| **Units / Franchises**  | Performance comparison between units, ranking, and highlight identification       | Optional  |
-| **Insights & Trends**   | Growth trends, metric alerts, and automatic highlights                            | Optional  |
-| **Profile**             | Profile settings: personal data, security (password/email), email notifications   | Essential |
+| Page                    | Description                                                                        | Status    |
+| ----------------------- | ---------------------------------------------------------------------------------- | --------- |
+| **Dashboard Overview**  | Main KPIs, revenue, orders, average ticket, and growth vs previous period          | Essential |
+| **Sales Analytics**     | Revenue by period, comparisons between units, franchise ranking, and trend charts  | Essential |
+| **Product Mix**         | Product share in revenue, top items, revenue by category, and composition charts   | Essential |
+| **Operations & Orders** | Peak hours, distribution by channel, cancellation rate, and recent orders          | Optional  |
+| **Units / Franchises**  | Revenue & Orders by unit (Top 10 + Others), selected unit highlight, ranking table | Optional  |
+| **Insights & Trends**   | Growth trends, metric alerts, and automatic highlights                             | Optional  |
+| **Profile**             | Profile with real Clerk data (useUser), security, notifications, sign-out          | Essential |
 
 ### KPIs and Metrics
 
@@ -71,6 +71,12 @@ In most restaurants, sales, orders, products, and unit performance data are scat
 | [Zustand](https://zustand-demo.pmnd.rs) | Lightweight global state: period filters, selected unit, sidebar. Zero boilerplate        |
 | [Zod](https://zod.dev)                  | Validation schemas for all mocked entities. Generates TypeScript types via `z.infer`      |
 | [date-fns](https://date-fns.org)        | Date manipulation and formatting. Pure and tree-shakeable functions — import individually |
+
+### Architecture
+
+| Pattern                            | Purpose                                                                                                                                                                                                    |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Adapter Pattern (Ports & Adapters) | Data layer abstraction. `DashboardPort` defines the contract; `MockDashboardAdapter` implements it with mock data. Swap to a real API by creating a new adapter — no changes needed in pages or components |
 
 ### Visualization
 
@@ -124,6 +130,8 @@ src/
 │   ├── tables/              # TanStack Table wrappers
 │   └── filters/             # DateRangePicker, UnitSelector, CategoryFilter
 ├── lib/
+│   ├── adapters/            # Data source implementations (MockDashboardAdapter)
+│   ├── ports/               # Interfaces/contracts (DashboardPort)
 │   ├── mock/                # Mocked data and generator functions (fixed seed)
 │   ├── schemas/             # Zod schemas for all entities
 │   └── utils.ts             # cn(), formatting, helpers
@@ -166,7 +174,7 @@ Authenticated     → /dashboard
        ↓
 Middleware protects all /dashboard/* and /settings routes
        ↓
-UserButton in header: avatar + name + logout
+UserButton in header: avatar (ring + hover) + dropdown with Profile link + logout
 ```
 
 ---
@@ -184,7 +192,6 @@ pnpm install
 ```
 
 ### 2. Configure environment variables
-
 
 ### 3. Run
 
@@ -225,7 +232,7 @@ pnpm lint     # Run ESLint
 
 ## Future Improvements (V2)
 
-- **Real backend** — Node.js, Prisma, PostgreSQL
+- **Real backend** — Node.js, Prisma, PostgreSQL + new `ApiDashboardAdapter` implementing `DashboardPort`
 - **TanStack Query** — caching and fetching when an API is available
 - **Export** — reports in PDF and CSV
 - **Multitenancy** — admin, manager, and viewer profiles with Clerk Organizations

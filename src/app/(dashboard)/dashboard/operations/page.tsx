@@ -1,8 +1,17 @@
+'use client'
+
 import { PageHeader } from '@/components/page-header'
 import { KpiCard } from '@/components/kpi-card'
-import { Placeholder } from '@/components/placeholder'
+import { OrdersByHourBarChart } from '@/components/charts/orders-by-hour-bar-chart'
+import { OrdersByChannelPieChart } from '@/components/charts/orders-by-channel-pie-chart'
+import { RecentOrdersTable } from '@/components/tables/recent-orders-table'
+import { useDashboardData } from '@/hooks/use-dashboard-data'
+import { formatPercent } from '@/lib/formatters'
 
 export default function OperationsPage() {
+  const { kpis, hourlyOrders, channelDistribution, filteredOrders, unitNameMap } =
+    useDashboardData()
+
   return (
     <>
       <PageHeader title="Operations & Orders" />
@@ -10,23 +19,35 @@ export default function OperationsPage() {
       <div className="space-y-6 p-6">
         {/* KPI Cards */}
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <KpiCard title="Orders Today" value="342" trend="+18.5%" trendDirection="up" />
-          <KpiCard title="Cancellation Rate" value="2.3%" trend="-0.5pp" trendDirection="up" />
-          <KpiCard title="Peak Hour" value="12:00–13:00" trend="" trendDirection="neutral" />
-          <KpiCard title="Avg Prep Time" value="18 min" trend="-2 min" trendDirection="up" />
+          <KpiCard
+            title="Orders Today"
+            value={String(kpis.totalOrders)}
+            trend="+18.5%"
+            trendDirection="up"
+          />
+          <KpiCard
+            title="Cancellation Rate"
+            value={formatPercent(kpis.cancellationRate)}
+            trend="-0.5pp"
+            trendDirection="up"
+          />
+          <KpiCard title="Peak Hour" value={kpis.peakHour} trend="" trendDirection="neutral" />
+          <KpiCard
+            title="Avg Prep Time"
+            value={`${kpis.avgPrepTime} min`}
+            trend="-2 min"
+            trendDirection="up"
+          />
         </div>
 
         {/* Charts */}
         <div className="grid gap-4 lg:grid-cols-2">
-          <Placeholder label="Bar Chart: Orders by Hour" />
-          <Placeholder label="Pie Chart: Orders by Channel" />
+          <OrdersByHourBarChart data={hourlyOrders} />
+          <OrdersByChannelPieChart data={channelDistribution} />
         </div>
 
         {/* Table */}
-        <Placeholder
-          label="Data Table: Recent Orders — ID · Date · Unit · Channel · Items · Total · Status"
-          height="h-80"
-        />
+        <RecentOrdersTable orders={filteredOrders} unitNames={unitNameMap} />
       </div>
     </>
   )
