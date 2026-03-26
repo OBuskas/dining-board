@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ChartCard } from './chart-card'
 import { formatCompactUSD, formatUSD } from '@/lib/formatters'
+import { CHART_PRIMARY } from '@/constants/colors'
 import type { ProductRanking } from '@/lib/mock'
 
 interface TopProductsBarChartProps {
@@ -13,7 +14,7 @@ export function TopProductsBarChart({ data }: TopProductsBarChartProps) {
   const top10 = data.slice(0, 10)
 
   return (
-    <ChartCard title="Top 10 Products">
+    <ChartCard title="Top 10 Products" isEmpty={data.length === 0}>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={top10} layout="vertical">
@@ -38,8 +39,10 @@ export function TopProductsBarChart({ data }: TopProductsBarChartProps) {
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
-            <Bar dataKey="revenue" fill="hsl(220, 70%, 50%)" radius={[0, 4, 4, 0]} />
+            <Bar dataKey="revenue" fill={CHART_PRIMARY} radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

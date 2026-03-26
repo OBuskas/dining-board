@@ -5,15 +5,24 @@ interface ChartCardProps {
   title: string
   children: React.ReactNode
   className?: string
+  isEmpty?: boolean
 }
 
-export function ChartCard({ title, children, className }: ChartCardProps) {
+export function ChartCard({ title, children, className, isEmpty }: ChartCardProps) {
   return (
     <Card className={cn(className)}>
       <CardHeader>
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent>
+        {isEmpty ? (
+          <div className="flex h-64 items-center justify-center">
+            <p className="text-muted-foreground text-sm">No data available.</p>
+          </div>
+        ) : (
+          children
+        )}
+      </CardContent>
     </Card>
   )
 }

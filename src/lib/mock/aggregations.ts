@@ -139,7 +139,7 @@ export function computeProductRankings(
         categoryName: cat?.name || '',
         unitsSold: data.unitsSold,
         revenue: Math.round(data.revenue * 100) / 100,
-        mixPercent: Math.round((data.revenue / totalRevenue) * 10000) / 100,
+        mixPercent: totalRevenue > 0 ? Math.round((data.revenue / totalRevenue) * 10000) / 100 : 0,
       }
     })
     .sort((a, b) => b.revenue - a.revenue)
@@ -182,7 +182,8 @@ export function computeCategoryRevenue(
         color: cat.color,
         revenue: data ? Math.round(data.revenue * 100) / 100 : 0,
         orders: data ? data.orders.size : 0,
-        percentage: data ? Math.round((data.revenue / totalRevenue) * 10000) / 100 : 0,
+        percentage:
+          data && totalRevenue > 0 ? Math.round((data.revenue / totalRevenue) * 10000) / 100 : 0,
       }
     })
     .sort((a, b) => b.revenue - a.revenue)
@@ -259,7 +260,7 @@ export function computeChannelDistribution(orders: Order[]): ChannelDistribution
     channel: ch,
     label: labels[ch],
     orders: map.get(ch) || 0,
-    percentage: Math.round(((map.get(ch) || 0) / total) * 10000) / 100,
+    percentage: total > 0 ? Math.round(((map.get(ch) || 0) / total) * 10000) / 100 : 0,
   }))
 }
 
@@ -320,7 +321,10 @@ export function computeKpis(
   )
 
   // Avg prep time
-  const avgPrep = completed.reduce((s, o) => s + o.prepTimeMinutes, 0) / completed.length
+  const avgPrep =
+    completed.length > 0
+      ? completed.reduce((s, o) => s + o.prepTimeMinutes, 0) / completed.length
+      : 0
 
   // Total items for avg items per order
   const totalItems = completed.reduce(
@@ -342,9 +346,11 @@ export function computeKpis(
     completedOrders: completed.length,
     cancelledOrders: cancelled.length,
     avgTicket: Math.round(avgTicket * 100) / 100,
-    cancellationRate: Math.round((cancelled.length / orders.length) * 10000) / 100,
+    cancellationRate:
+      orders.length > 0 ? Math.round((cancelled.length / orders.length) * 10000) / 100 : 0,
     monthlyRevenue: Math.round(monthlyRevenue * 100) / 100,
-    revenuePerUnit: Math.round((totalRevenue / unitList.length) * 100) / 100,
+    revenuePerUnit:
+      unitList.length > 0 ? Math.round((totalRevenue / unitList.length) * 100) / 100 : 0,
     bestDayRevenue: Math.round(bestDayRev * 100) / 100,
     bestDayName: dayName(bestDow),
     peakHour: `${String(peakHour.hour).padStart(2, '0')}:00–${String(peakHour.hour + 1).padStart(2, '0')}:00`,
@@ -353,9 +359,11 @@ export function computeKpis(
     activeUnits: unitList.filter((u) => u.isActive).length,
     topProductName: topProduct?.productName || '',
     topProductRevenue: topProduct?.revenue || 0,
-    avgItemsPerOrder: Math.round((totalItems / completed.length) * 10) / 10,
+    avgItemsPerOrder:
+      completed.length > 0 ? Math.round((totalItems / completed.length) * 10) / 10 : 0,
     bestUnitName: bestUnit?.unitName || '',
     bestUnitRevenue: bestUnit?.revenue || 0,
-    avgRevenuePerUnit: Math.round((totalRevenue / unitList.length) * 100) / 100,
+    avgRevenuePerUnit:
+      unitList.length > 0 ? Math.round((totalRevenue / unitList.length) * 100) / 100 : 0,
   }
 }

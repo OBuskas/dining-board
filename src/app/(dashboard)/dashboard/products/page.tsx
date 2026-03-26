@@ -44,8 +44,8 @@ export default function ProductsPage() {
 
         {/* Charts */}
         <div className="grid gap-4 lg:grid-cols-2">
-          <ProductMixDonutChart data={categoryRevenue} />
           <TopProductsBarChart data={productRankings} />
+          <ProductMixDonutChart data={categoryRevenue} />
         </div>
 
         {/* Table */}

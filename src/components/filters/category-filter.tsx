@@ -20,8 +20,14 @@ export function CategoryFilter() {
 
   return (
     <Select value={selectedCategoryId || 'all'} onValueChange={handleChange}>
-      <SelectTrigger className="h-10 w-56 text-sm">
-        <SelectValue />
+      <SelectTrigger className="h-10 w-full text-sm sm:w-56" aria-label="Filter by category">
+        <SelectValue>
+          {() =>
+            selectedCategoryId
+              ? (categories.find((c) => c.id === selectedCategoryId)?.name ?? selectedCategoryId)
+              : 'All Categories'
+          }
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">All Categories</SelectItem>

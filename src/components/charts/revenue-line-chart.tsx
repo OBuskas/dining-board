@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { ChartCard } from './chart-card'
 import { formatCompactUSD, formatUSD } from '@/lib/formatters'
+import { CHART_PRIMARY } from '@/constants/colors'
 import type { DailyRevenue } from '@/lib/mock'
 
 interface RevenueLineChartProps {
@@ -24,7 +25,7 @@ export function RevenueLineChart({ data }: RevenueLineChartProps) {
   }))
 
   return (
-    <ChartCard title="Revenue Trend">
+    <ChartCard title="Revenue Trend" isEmpty={data.length === 0}>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
@@ -48,11 +49,13 @@ export function RevenueLineChart({ data }: RevenueLineChartProps) {
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Line
               type="monotone"
               dataKey="revenue"
-              stroke="hsl(220, 70%, 50%)"
+              stroke={CHART_PRIMARY}
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4 }}

@@ -17,7 +17,7 @@ export function RevenuePerUnitBarChart({ data }: RevenuePerUnitBarChartProps) {
   }))
 
   return (
-    <ChartCard title="Revenue per Unit">
+    <ChartCard title="Revenue per Unit" isEmpty={data.length === 0}>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
@@ -36,6 +36,8 @@ export function RevenuePerUnitBarChart({ data }: RevenuePerUnitBarChartProps) {
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Bar dataKey="revenue" radius={[4, 4, 0, 0]} />
           </BarChart>

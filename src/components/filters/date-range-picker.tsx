@@ -60,7 +60,7 @@ export function DateRangePicker() {
 
   return (
     <Select value={selected} onValueChange={handleChange}>
-      <SelectTrigger className="h-9 w-full text-xs sm:w-44">
+      <SelectTrigger className="h-9 w-full text-xs sm:w-44" aria-label="Select date range">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

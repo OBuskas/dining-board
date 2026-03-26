@@ -13,7 +13,17 @@ import {
 import type { DashboardPort, DashboardFilters, DashboardData } from '@/lib/ports/dashboard-port'
 
 class MockDashboardAdapter implements DashboardPort {
+  private cache = new Map<string, DashboardData>()
+
+  private cacheKey(filters: DashboardFilters): string {
+    return `${filters.dateRange.from.getTime()}-${filters.dateRange.to.getTime()}-${filters.selectedUnitId ?? ''}-${filters.selectedCategoryId ?? ''}`
+  }
+
   getData(filters: DashboardFilters): DashboardData {
+    const key = this.cacheKey(filters)
+    const cached = this.cache.get(key)
+    if (cached) return cached
+
     const { dateRange, selectedUnitId, selectedCategoryId } = filters
 
     // Filter orders by date range and unit
@@ -72,7 +82,7 @@ class MockDashboardAdapter implements DashboardPort {
 
     const unitNameMap = new Map(units.map((u) => [u.id, u.name]))
 
-    return {
+    const result: DashboardData = {
       filteredOrders,
       completedOrders,
       kpis,
@@ -87,6 +97,9 @@ class MockDashboardAdapter implements DashboardPort {
       previousDailyRevenue,
       unitNameMap,
     }
+
+    this.cache.set(key, result)
+    return result
   }
 }
 

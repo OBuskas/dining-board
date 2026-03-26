@@ -15,7 +15,25 @@
       "Bash(find /c/Users/lucas/Documentos/programas/dining-board/src/components/ui -name *.tsx -type f)",
       "Bash(find c:UserslucasDocumentosprogramasdining-board -type f -name *.config.*)",
       "Bash(find /c/Users/lucas/Documentos/programas/dining-board -type f -name *auth* -o -name *clerk*)",
-      "Bash(ls -la /c/Users/lucas/Documentos/programas/dining-board/.env*)"
+      "Bash(ls -la /c/Users/lucas/Documentos/programas/dining-board/.env*)",
+      "Bash(find /c/Users/lucas/Documentos/programas/dining-board/src -type f -name *.tsx -o -name *.ts)",
+      "Bash(grep -n \"className.*h-\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -n \"focus\\\\|hover:\" /c/Users/lucas/Documentos/programas/dining-board/src/components/filters/*.tsx)",
+      "Bash(xargs grep:*)",
+      "Bash(grep -n \"itemStyle\\\\|labelStyle\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -n \"data\\\\.length === 0\\\\|data\\\\?.length\\\\|!data\\\\|if.*data\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -n \"hsl\\(\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -n \"fill=\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(wc -l /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -n \"className.*w-\\\\|className.*max-w-\" /c/Users/lucas/Documentos/programas/dining-board/src/components/filters/*.tsx)",
+      "Bash(grep -n \"tablet\\\\|mobile\\\\|responsive\" /c/Users/lucas/Documentos/programas/dining-board/src/components/charts/*.tsx)",
+      "Bash(grep -r export.*config /c/Users/lucas/Documentos/programas/dining-board/src --include=*.ts)",
+      "Bash(git mv:*)",
+      "Bash(ls \"c:/Users/lucas/Documentos/programas/dining-board/src/app/\\(dashboard\\)/dashboard/profile/\")",
+      "Bash(find /c/Users/lucas/Documentos/programas/dining-board -name tailwind* -type f)",
+      "Bash(ls -la /c/Users/lucas/Documentos/programas/dining-board/src/app/\\\\\\(dashboard\\\\\\)/dashboard/)",
+      "Bash(npx next:*)",
+      "Bash(git stash:*)"
     ]
   }
 }

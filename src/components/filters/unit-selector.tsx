@@ -17,7 +17,9 @@ export function UnitSelector() {
 
   return (
     <Select value={selectedUnitId || 'all'} onValueChange={handleChange}>
-      <SelectTrigger className="h-9 w-full text-xs sm:w-48">{selectedLabel}</SelectTrigger>
+      <SelectTrigger className="h-9 w-full text-xs sm:w-48" aria-label="Select unit">
+        {selectedLabel}
+      </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">All Units</SelectItem>
         {units.map((unit) => (

@@ -13,12 +13,13 @@ import {
 } from 'recharts'
 import { ChartCard } from './chart-card'
 import { formatCompactUSD, formatUSD, formatNumber } from '@/lib/formatters'
+import { CHART_PRIMARY, CHART_SUCCESS } from '@/constants/colors'
 import type { UnitMetric } from '@/lib/mock'
 
 const MAX_UNITS = 10
 const OTHERS_ID = '__others__'
-const REVENUE_COLOR = 'hsl(220, 70%, 50%)'
-const ORDERS_COLOR = 'hsl(142, 70%, 45%)'
+const REVENUE_COLOR = CHART_PRIMARY
+const ORDERS_COLOR = CHART_SUCCESS
 const OTHERS_COLOR = 'hsl(220, 15%, 55%)'
 const DIMMED_COLOR = 'hsl(220, 10%, 70%)'
 const DIMMED_OPACITY = 0.3
@@ -67,7 +68,7 @@ export function UnitComparisonBarChart({ data, selectedUnitId }: UnitComparisonB
   return (
     <div className="grid gap-4">
       {/* Revenue by Unit */}
-      <ChartCard title="Revenue by Unit">
+      <ChartCard title="Revenue by Unit" isEmpty={data.length === 0}>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
@@ -86,6 +87,8 @@ export function UnitComparisonBarChart({ data, selectedUnitId }: UnitComparisonB
                   border: '1px solid var(--border)',
                   borderRadius: '8px',
                 }}
+                itemStyle={{ color: 'var(--foreground)' }}
+                labelStyle={{ color: 'var(--foreground)' }}
               />
               <Bar dataKey="revenue" name="Revenue" radius={[4, 4, 0, 0]}>
                 {chartData.map((entry) => (
@@ -102,7 +105,7 @@ export function UnitComparisonBarChart({ data, selectedUnitId }: UnitComparisonB
       </ChartCard>
 
       {/* Orders by Unit */}
-      <ChartCard title="Orders by Unit">
+      <ChartCard title="Orders by Unit" isEmpty={data.length === 0}>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
@@ -121,6 +124,8 @@ export function UnitComparisonBarChart({ data, selectedUnitId }: UnitComparisonB
                   border: '1px solid var(--border)',
                   borderRadius: '8px',
                 }}
+                itemStyle={{ color: 'var(--foreground)' }}
+                labelStyle={{ color: 'var(--foreground)' }}
               />
               <Bar dataKey="orders" name="Orders" radius={[4, 4, 0, 0]}>
                 {chartData.map((entry) => (

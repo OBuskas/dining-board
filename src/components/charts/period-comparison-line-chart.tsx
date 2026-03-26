@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import { ChartCard } from './chart-card'
 import { formatCompactUSD, formatUSD } from '@/lib/formatters'
+import { CHART_PRIMARY, CHART_SECONDARY } from '@/constants/colors'
 import type { DailyRevenue } from '@/lib/mock'
 
 interface PeriodComparisonLineChartProps {
@@ -31,7 +32,10 @@ export function PeriodComparisonLineChart({
   }))
 
   return (
-    <ChartCard title="Period Comparison">
+    <ChartCard
+      title="Period Comparison"
+      isEmpty={currentPeriod.length === 0 && previousPeriod.length === 0}
+    >
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
@@ -58,20 +62,15 @@ export function PeriodComparisonLineChart({
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Legend
               content={() => (
                 <div className="flex justify-center gap-6 pt-2 text-sm">
                   <div className="flex items-center gap-2">
                     <svg width="24" height="2">
-                      <line
-                        x1="0"
-                        y1="1"
-                        x2="24"
-                        y2="1"
-                        stroke="hsl(220, 70%, 50%)"
-                        strokeWidth={2}
-                      />
+                      <line x1="0" y1="1" x2="24" y2="1" stroke={CHART_PRIMARY} strokeWidth={2} />
                     </svg>
                     <span className="text-muted-foreground">Current Period</span>
                   </div>
@@ -82,7 +81,7 @@ export function PeriodComparisonLineChart({
                         y1="1"
                         x2="24"
                         y2="1"
-                        stroke="hsl(262, 60%, 55%)"
+                        stroke={CHART_SECONDARY}
                         strokeWidth={2}
                         strokeDasharray="4 3"
                       />
@@ -95,14 +94,14 @@ export function PeriodComparisonLineChart({
             <Line
               type="monotone"
               dataKey="current"
-              stroke="hsl(220, 70%, 50%)"
+              stroke={CHART_PRIMARY}
               strokeWidth={2}
               dot={false}
             />
             <Line
               type="monotone"
               dataKey="previous"
-              stroke="hsl(262, 60%, 55%)"
+              stroke={CHART_SECONDARY}
               strokeWidth={2}
               strokeDasharray="5 5"
               dot={false}

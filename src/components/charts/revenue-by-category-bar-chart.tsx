@@ -13,7 +13,7 @@ export function RevenueByCategoryBarChart({ data }: RevenueByCategoryBarChartPro
   const chartData = data.map((d) => ({ ...d, fill: d.color }))
 
   return (
-    <ChartCard title="Revenue by Category">
+    <ChartCard title="Revenue by Category" isEmpty={data.length === 0}>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} layout="vertical">
@@ -38,6 +38,8 @@ export function RevenueByCategoryBarChart({ data }: RevenueByCategoryBarChartPro
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Bar dataKey="revenue" radius={[0, 4, 4, 0]} />
           </BarChart>

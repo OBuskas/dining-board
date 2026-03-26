@@ -28,3 +28,8 @@ export const UNIT_COLORS = [
   'hsl(330, 80%, 55%)',
   'hsl(262, 60%, 55%)',
 ]
+
+// Semantic chart colors
+export const CHART_PRIMARY = 'hsl(220, 70%, 50%)'
+export const CHART_SECONDARY = 'hsl(262, 60%, 55%)'
+export const CHART_SUCCESS = 'hsl(142, 70%, 45%)'

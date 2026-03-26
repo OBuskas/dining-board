@@ -79,6 +79,7 @@ export function SidebarNav() {
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
             className="text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground w-full"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? (
               <HiOutlineChevronRight className="size-5" />

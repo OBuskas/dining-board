@@ -1,5 +1,5 @@
 import { DashboardSkeleton } from '@/components/skeletons/dashboard-skeleton'
 
 export default function Loading() {
-  return <DashboardSkeleton kpiCount={3} chartCount={1} tableCount={1} />
+  return <DashboardSkeleton kpiCount={3} chartCount={2} tableCount={1} />
 }

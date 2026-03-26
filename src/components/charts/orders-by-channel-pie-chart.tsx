@@ -16,7 +16,7 @@ export function OrdersByChannelPieChart({ data }: OrdersByChannelPieChartProps) 
   }))
 
   return (
-    <ChartCard title="Orders by Channel">
+    <ChartCard title="Orders by Channel" isEmpty={data.length === 0}>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart margin={{ top: 20, right: 20, bottom: 0, left: 20 }}>
@@ -36,6 +36,8 @@ export function OrdersByChannelPieChart({ data }: OrdersByChannelPieChartProps) 
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Legend />
           </PieChart>

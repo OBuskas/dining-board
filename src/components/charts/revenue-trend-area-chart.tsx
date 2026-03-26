@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { ChartCard } from './chart-card'
 import { formatCompactUSD, formatUSD } from '@/lib/formatters'
+import { CHART_PRIMARY, CHART_SUCCESS } from '@/constants/colors'
 import type { DailyRevenue } from '@/lib/mock'
 
 interface RevenueTrendAreaChartProps {
@@ -56,7 +57,7 @@ export function RevenueTrendAreaChart({ data, projectionDays = 15 }: RevenueTren
   ]
 
   return (
-    <ChartCard title="Revenue Trend + Projection">
+    <ChartCard title="Revenue Trend + Projection" isEmpty={data.length === 0}>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
@@ -83,12 +84,14 @@ export function RevenueTrendAreaChart({ data, projectionDays = 15 }: RevenueTren
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
               }}
+              itemStyle={{ color: 'var(--foreground)' }}
+              labelStyle={{ color: 'var(--foreground)' }}
             />
             <Area
               type="monotone"
               dataKey="revenue"
-              stroke="hsl(220, 70%, 50%)"
-              fill="hsl(220, 70%, 50%)"
+              stroke={CHART_PRIMARY}
+              fill={CHART_PRIMARY}
               fillOpacity={0.2}
               strokeWidth={2}
               connectNulls={false}
@@ -96,8 +99,8 @@ export function RevenueTrendAreaChart({ data, projectionDays = 15 }: RevenueTren
             <Area
               type="monotone"
               dataKey="projected"
-              stroke="hsl(142, 70%, 45%)"
-              fill="hsl(142, 70%, 45%)"
+              stroke={CHART_SUCCESS}
+              fill={CHART_SUCCESS}
               fillOpacity={0.1}
               strokeWidth={2}
               strokeDasharray="5 5"
